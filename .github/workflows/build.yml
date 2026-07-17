@@ -1,0 +1,24 @@
+name: Build Android APK
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Expo CLI and Dependencies
+        run: |
+          npm install -g eas-cli
+          npm install
+
+      - name: Build APK (Local Compile)
+        run: |
+          npx expo export
+          # Is step par GitHub ka cloud container aapke react-native code ko standard Android assets mein convert karega.
